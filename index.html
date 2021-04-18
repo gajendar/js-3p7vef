@@ -1,0 +1,331 @@
+<html>
+
+<head>
+  <title>
+    Demo of Shopping Cart using underscore.js
+  </title>
+
+  <style type="text/css">
+    .checkout {
+      background-color: #4CAF50;
+      color: white;
+      text-decoration: none;
+      display: inline-block;
+      padding: 8px 16px;
+    }
+
+    .addtoCart {
+      background-color: azure;
+      color: #4CAF50;
+      text-decoration: none;
+      display: inline-block;
+      padding: 5px 16px;
+      font-weight: 600;
+      border: 2px solid;
+      margin-bottom: 10px;
+      border-radius: 5px;
+    }
+  </style>
+
+</head>
+
+<body style="font-family: sans-serif; font-size: 12px;">
+  <div style="border:4px solid ">
+    <table style="background-color: black; color: white;font-family: sans-serif; font-size:12px;">
+      <tr>
+        <td width="20%">
+          <img src="https://images.unsplash.com/photo-1432139555190-58524dae6a55?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=310&q=80" />
+        </td>
+        <td style="padding:10px; vertical-align:middle;">
+          <strong style="font-size:18px; font-weight:bold;">BIB- English Breackfast in the Box</strong>
+          <br />
+          <br />
+                    Continental American
+          <br /><br />
+                    Electronic City
+          <br /><br />
+          <table style="color: white;font-family: sans-serif; font-size:12px; width:55%;">
+            <tr>
+              <td width="30%">
+                <span style="font-size:15px; font-weight:bold;">3.7 *</span> <br /> <br />
+                                300+ Rating
+              </td>
+              <td width="30%">
+                <span style="font-size:15px; font-weight:bold;">
+                                    30 minutes
+                                </span>
+                <br /> <br />
+                                Delivery Time
+              </td>
+              <td width="40%">
+                <span style="font-size:15px; font-weight:bold;">
+                                    Rs. 200
+                                </span><br /> <br />
+                                Cost for two
+              </td>
+            </tr>
+          </table>
+
+        </td>
+        <td width="20%" style="vertical-align: middle;padding:20px;">
+          <fieldset>
+            <legend style="font-weight:bold; font-size:16px;">OFFER</legend>
+            <div>10% off up to Rs. 300 on orders<br /> above Rs. 800 | Use code PARTY</div>
+            <br /><br />
+            <div>15% off up to Rs. 45 | Use code <br />SWIGYIT</div>
+          </fieldset>
+        </td>
+      </tr>
+    </table>
+    <table style="padding:20px;" width="98%">
+      <tr>
+        <td width="20%" valign="top">
+          <span id="category"> </span>
+        </td>
+
+        <td valign="top">
+          <span id="item"> </span>
+        </td>
+        <td width="5%"></td>
+        <td valign="top" width="20%">
+          <span style="font-size:18px; font-weight:bold;">Cart</span>
+          <br />
+          <span id="spnItemQty" style="color:dimgray; font-size:14px; font-weight:600;">0</span><span id="spnItemQty" style="color:dimgray; font-size:14px;">&nbsp; ITEMS</span>
+          <br />
+          <br />
+          <span style="font-size:16px; font-weight:bold;">SubTotal</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <span style="font-size:16px; font-weight:bold;" id="spnSubTotal">0.00</span>
+          <br />
+          <span style="color:dimgray; font-size:12px;">Extra charges may apply</span>
+          <br />
+          <br />
+          <br />
+          <a href="javascript:void(0);" class="checkout">CHECKOUT &raquo;</a>
+        </td>
+
+      </tr>
+    </table>
+  </div>
+  <script type="text/html" id='category-data'>
+    <% _.each(groupItems, function(item){ %>
+      <a href="javascript:void(0);" onclick="getCategoryItem('<%=item %>');"
+        style="color:chocolate; font-size:15px; font-weight:bold;">
+        <%= item%>
+      </a>
+      <br />
+      <br />
+      <% }) %>
+  </script>
+
+  <script type="text/html" id='item-data'>
+    <% _.each(groupedData, function(cat){ %>
+      <strong> <%= cat.category%></strong>
+      <hr />
+      <br />
+
+      <% _.each(cat.data, function(item){ %>
+
+        <div style="padding:15px; width:50%">
+          <% if (item.VegNonVeg=='Veg' ){ %>
+            <img src="https://www.pngkey.com/png/full/261-2619381_chitr-veg-symbol-svg-veg-and-non-veg.png" width="10" />
+
+            <% } else { %>
+              <img src="https://www.pngkey.com/png/full/245-2459071_non-veg-icon-non-veg-symbol-png.png" width="10" />
+              <% } %>
+                <span style="color: darkorange;">Rating </span> <span style="color: dimgray;"><%= item.rating%></span>
+                <br />
+                <span style="font-weight:600;font-size:13px; padding-top:10px;"> <%= item.name%></span>
+                <br />
+                <span style="color:darkslategrey; font-size:12px; font-weight:600;">Rs. <%= item.price%></span><br />
+                <span style="color:dimgray; font-size:12px;"><%= item.description%></span>
+
+
+        </div>
+        <div>
+          <img src="<%=item.imageURL %>" width="170" style="border: 2px outset chocolate;border-radius:5px; box-sizing: border-box;" />
+          <a href="javascript:void(0);" onclick="addtoCart('<%=item.price %>');" class="addtoCart">Add + </a>
+
+        </div>
+        <div style="width:50%">
+          <hr />
+          <br />
+        </div>
+        <% }) %>
+          <br />
+          <% }) %>
+  </script>
+
+  <script type="text/JavaScript" src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+  <script type="text/JavaScript" src="https://underscorejs.org/underscore-min.js"></script>
+
+  <script type="text/JavaScript">
+    var storeItems = [
+            {
+                "name": "Super Saver Veg Combo",
+                "description": "(Serves 1) A meal of delicious flavours & delicious savings! 1 Chatpate Chole Wrap + Potato Wedges (120 gms)",
+                "imageURL": "https://product-assets.faasos.io/production/product/image_1614827876266_Chatpate%20Chole%20Wrap%20%2B%20wedges%20%281%29.jpg",
+                "category": "Recommended",
+                "subcategory": "Breakfast",
+                "VegNonVeg": "Veg",
+                "price": 75,
+                "rating": 4.4
+            },
+            {
+                "name": "Super Saver Egg-citing Combo",
+                "description": "(Serves 1) Egg-stra flavour, fun and savings! 1 Double Egg Chatpata Wrap + Potato Wedges (120 gms)",
+                "imageURL": "https://product-assets.faasos.io/production/product/image_1614827910033_Double%20egg%20chatpata%20wrap%20%2B%20wedges%20%281%29.jpg",
+                "category": "Recommended",
+                "subcategory": "Breakfast",
+                "VegNonVeg": "Veg",
+                "price": 129,
+                "rating": 4.0
+            },
+            {
+                "name": "Cheesy Chicken Meatballs",
+                "description": "[100% Safely Cooked Chicken] Juicy minced chicken meatballs, served with a cheesy mayonnaise dip - A no-brainer for snack cravings!",
+                "imageURL": "https://product-assets.faasos.io/production/product/image_1598267868599_image_es_1596284076798_Cheesy%20Chicken%20Meatballs%20%28CF%29.jpg",
+                "category": "Recommended",
+                "subcategory": "Breakfast",
+                "VegNonVeg": "Non Veg",
+                "price": 100,
+                "rating": 4.5
+            },
+            {
+                "name": "300ML - Choco Mint.",
+                "description": "A refreshing combination of Chocolate and Mint which is guaranteed to make you go WOW!",
+                "imageURL": "https://product-assets.faasos.io/production/product/image_1600202290217_image_1599252186093_choco-mint.jpg",
+                "category": "Recommended",
+                "subcategory": "Breakfast",
+                "VegNonVeg": "Veg",
+                "price": 99,
+                "rating": 4.4
+            },
+            {
+                "name": "Family Saver Veg Wrap Feast",
+                "description": "(Serves 4) Definite fun & savings of Rs.242! 1 Masala Paneer Tikka Wrap + 1 Cheese Melt Paneer Wrap + 1 Veg Falafel Wrap + 1 Cheesy Corn Salsa Wrap + 4 Choco Lavas + 2 Coke Cans(330ml each)",
+                "imageURL": "https://product-assets.faasos.io/production/product/image_1614102679371_Family%20Saver%20Veg%20Wrap%20Feast.jpg",
+                "category": "Breakfast In The Box",
+                "subcategory": "Breakfast",
+                "VegNonVeg": "Veg",
+                "price": 275,
+                "rating": 4.8
+            },
+            {
+                "name": "Super Saver Chicken Bhuna Wrap Meal",
+                "description": "Serves 1) Time to unwrap big savings with this delicious meal! Save Rs 50 with Chicken Bhuna Wrap + Potato Wedges (120 gms) + 1 Choco Lava",
+                "imageURL": "https://product-assets.faasos.io/production/product/image_1614099072006_Super%20Saver%20Chicken%20Bhuna%20Wrap%20Meal%20.jpg",
+                "category": "Breakfast In The Box",
+                "subcategory": "Breakfast",
+                "VegNonVeg": "NonVeg",
+                "price": 375,
+                "rating": 4.2
+            },
+
+            {
+                "name": "Mutton Boti Wrap",
+                "description": "Your mutton affair is out! Oops no, it just got wrapped in some exotic Indian spices. Cooked to perfection adorned with sliced onions it is juicy, tender and yummy",
+                "imageURL": "https://product-assets.faasos.io/production/product/image_1598615697802_Mutton%20Boti%20wrap.jpg",
+                "category": "Breakfasts Around The World",
+                "subcategory": "Breakfast",
+                "VegNonVeg": "Veg",
+                "price": 375,
+                "rating": 4.2
+            },
+            {
+                "name": "New York Cheesecake",
+                "description": "Dense, creamy & smooth Philadelphia cream cheese paired with a crust made with crackers & butter with a hint of ginger; these nifty New York Cheesecake are indulgence redefined (With egg).",
+                "imageURL": "https://product-assets.faasos.io/production/product/image_1598615697802_Mutton%20Boti%20wrap.jpg",
+                "category": "Breakfasts Around The World",
+                "subcategory": "Breakfast",
+                "VegNonVeg": "NonVeg",
+                "price": 175,
+                "rating": 4.0
+            },
+            {
+                "name": "Egg-citing Combo",
+                "description": "Egg-stra flavour, fun and savings! 1 Double Egg Chatpata Wrap + Potato Wedges (120 gms)",
+                "imageURL": "https://product-assets.faasos.io/production/product/image_1614827910033_Double%20egg%20chatpata%20wrap%20%2B%20wedges%20%281%29.jpg",
+                "category": "Breakfasts Around The World",
+                "subcategory": "Breakfast",
+                "VegNonVeg": "Veg",
+                "price": 199,
+                "rating": 4.1
+            },
+
+            {
+                "name": "Rajma Masala Rice Bowl (Serves 1)",
+                "description": "A regular-sized bowl of aromatic spiced rice with your all-time favorite rajma slow-cooked in a mildly spiced onion-tomato gravy.",
+                "imageURL": "https://product-assets.faasos.io/production/product/image_1599488976282_Rajma%20Masala%20Rice%20Bowl%20%28Serves%201%29%20%281%29.jpg",
+                "category": "Brunch In The Box",
+                "subcategory": "Breakfast",
+                "VegNonVeg": "Veg",
+                "price": 99,
+                "rating": 4.7
+            },
+            {
+                "name": "Smoked Butter Chicken Rice Bowl (Serves 1)",
+                "description": "[100% Safely Cooked Chicken]Faasos Finest - A regular-sized bowl of aromatic and flavorful basmati rice mixed with the awesome butter chicken. How can things get better!",
+                "imageURL": "https://product-assets.faasos.io/production/product/image_1599488976282_Rajma%20Masala%20Rice%20Bowl%20%28Serves%201%29%20%281%29.jpg",
+                "category": "Brunch In The Box",
+                "subcategory": "Breakfast",
+                "VegNonVeg": "NonVeg",
+                "price": 299,
+                "rating": 4.3
+            },
+            {
+                "name": "Egg Rice Bowl (Mini)",
+                "description": "A mini bowl of flavorful biryani rice and mildly-spiced onion tomato gravy, topped with golden-fried omelette. This is how God said, let there be comfort.",
+                "imageURL": "https://product-assets.faasos.io/production/product/image_1599489071640_Egg%20Rice%20Bowl%20%28Mini%29%20%281%29.jpg",
+                "category": "Brunch In The Box",
+                "subcategory": "Breakfast",
+                "VegNonVeg": "Veg",
+                "price": 199,
+                "rating": 4.6
+            },
+        ];
+
+        var catTemplate = $("#category-data").html();
+        var itemTemplate = $("#item-data").html();
+        // var groupItems = _.groupBy(storeItems, 'category');
+        var groupItems = _.chain(storeItems).map(function (item) { return item.category }).uniq().value();
+        console.log(groupItems);
+        $("#category").html(_.template(catTemplate, { groupItems: groupItems }));
+
+        var groupedData = _.chain(storeItems)
+            .groupBy('category')
+            .map(function (group, key) {
+                return {
+                    category: key,
+                    data: group               
+                }
+            })
+            .value();    
+        console.log(groupedData);
+        $("#item").html(_.template(itemTemplate, { groupedData: groupedData }));
+
+           function  getCategoryItem(item) {
+                var itemTemplate = $("#item-data").html();
+                var groupedData = _.chain(storeItems.filter(i => i.category == item))
+                    .groupBy('category')
+                    .map(function (group, key) {
+                        return {
+                            category: key,
+                            data: group
+                        }
+                    })
+                    .value();
+               alert("Data filtered, but not updated in the template." + JSON.stringify(groupedData));
+               console.log(groupedData);
+                $("#item").html(_.template(itemTemplate, {}));
+                $("#item").html(_.template(itemTemplate, { groupedData: groupedData }));
+            }
+
+        function addtoCart(item) {
+           $('#spnItemQty').text(parseFloat($('#spnItemQty').text()) + 1);
+           $('#spnSubTotal').text(parseFloat($('#spnSubTotal').text()) + parseFloat(item));
+        }
+    </script>
+
+</body>
+
+</html>
